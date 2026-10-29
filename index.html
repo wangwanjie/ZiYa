@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>字芽 ZiYa · 陪孩子一字一字认汉字</title>
+<meta name="description" content="字芽是给孩子的中文识字 App：楷体大字、拼音、组词造句朗读和笔顺动画，3500 个字从启蒙排到六年级。离线可用、无广告，支持 iPhone、iPad 与 Mac。">
+<meta name="theme-color" content="#f6f0e1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#181d16" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="字芽 ZiYa · 陪孩子一字一字认汉字">
+<meta property="og:description" content="楷体大字、拼音、组词造句朗读和笔顺动画，3500 个字从启蒙排到六年级。离线可用、无广告。">
+<meta property="og:image" content="assets/icon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<script>
+// 首屏前决定主题与语言，避免闪烁；URL 参数优先于本地存储
+(function () {
+  var d = document.documentElement, q = new URLSearchParams(location.search), s = {};
+  try { s.t = localStorage.getItem('ziya-theme'); s.l = localStorage.getItem('ziya-lang'); } catch (e) {}
+  var t = q.get('theme');
+  var pref = (t === 'light' || t === 'dark' || t === 'system') ? t : (s.t || 'system');
+  var dark = pref === 'dark' || (pref === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+  d.setAttribute('data-theme', dark ? 'dark' : 'light');
+  d.setAttribute('data-theme-pref', pref);
+  var l = q.get('lang'), ok = { 'zh-CN': 1, 'zh-TW': 1, 'en': 1 };
+  if (!ok[l]) { l = ok[s.l] ? s.l : null; }
+  if (!l) {
+    var langs = navigator.languages || [navigator.language || 'en'];
+    l = 'en';
+    for (var i = 0; i < langs.length; i++) {
+      var x = (langs[i] || '').toLowerCase();
+      if (/^zh-(tw|hk|mo)|^zh-hant/.test(x)) { l = 'zh-TW'; break; }
+      if (/^zh/.test(x)) { l = 'zh-CN'; break; }
+      if (/^en/.test(x)) { break; }
+    }
+  }
+  d.setAttribute('lang', l);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">跳到正文</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./" aria-label="字芽 ZiYa">
+      <img src="assets/icon-64.webp" width="32" height="32" alt="" decoding="async">
+      <span class="brand-name">字芽</span><span class="brand-en">ZiYa</span>
+    </a>
+    <nav class="nav" aria-label="页面导航" data-i18n-aria="navAria">
+      <a href="#cards" data-i18n="nav.cards">翻字卡</a>
+      <a href="#learn" data-i18n="nav.learn">怎么学</a>
+      <a href="#parents" data-i18n="nav.parents">给家长</a>
+      <a href="#download" data-i18n="nav.download">下载</a>
+    </nav>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="语言" data-i18n-aria="langAria" id="langSeg">
+        <button type="button" data-lang="zh-CN" lang="zh-CN">简</button>
+        <button type="button" data-lang="zh-TW" lang="zh-TW">繁</button>
+        <button type="button" data-lang="en" lang="en">EN</button>
+      </div>
+      <div class="seg" role="group" aria-label="主题" data-i18n-aria="themeAria" id="themeSeg">
+        <button type="button" data-theme-set="light" aria-label="浅色" data-i18n-aria="theme.light" data-i18n-title="theme.light" title="浅色">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+        </button>
+        <button type="button" data-theme-set="dark" aria-label="深色" data-i18n-aria="theme.dark" data-i18n-title="theme.dark" title="深色">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6z"/></svg>
+        </button>
+        <button type="button" data-theme-set="system" aria-label="跟随系统" data-i18n-aria="theme.system" data-i18n-title="theme.system" title="跟随系统">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/></svg>
+        </button>
+      </div>
+      <a class="gh" href="https://github.com/wangwanjie/ZiYa" aria-label="在 GitHub 上查看" data-i18n-aria="ghAria">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- 首屏：宣纸上逐笔写出「芽」，写完长出小芽 -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="hero.eyebrow">中文识字启蒙 · iPhone / iPad / Mac</p>
+        <h1 class="hero-title" data-i18n-html="hero.title">一字一芽，<br>慢慢长大</h1>
+        <p class="lead" data-i18n="hero.lead">字芽陪孩子认识常用汉字：看大大的楷体字，听读音、组词和造句，再看字形一笔一笔描出来。3500 个字从启蒙排到六年级，不联网、没有广告，家长可以放心交给孩子。</p>
+        <div class="cta">
+          <a class="btn btn-main" href="https://github.com/wangwanjie/ZiYa/releases/latest/download/ZiYa-macOS.dmg">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4.5 19.5h15"/></svg>
+            <span data-i18n="hero.btnMac">下载 Mac 版</span>
+          </a>
+          <a class="btn btn-soft" href="#download" data-i18n="hero.btnIOS">iPhone / iPad 安装说明</a>
+        </div>
+        <p class="meta" data-i18n="hero.meta">版本 1.2 · 免费 · 离线可用 · macOS 12+ · iOS 14.8+</p>
+      </div>
+
+      <figure class="sheet-wrap">
+        <div class="sheet" id="sheet">
+          <svg id="hanzi" class="hanzi" viewBox="-40 -150 1080 1150" role="img" aria-label="汉字「芽」按笔顺逐笔书写，写完后长出一棵小芽" data-i18n-aria="hero.artAria"></svg>
+          <div class="seal" id="seal" aria-hidden="true"><span>字</span><span>芽</span></div>
+        </div>
+        <figcaption class="sheet-cap">
+          <span class="stroke-count" id="strokeCount" aria-live="polite">&nbsp;</span>
+          <button type="button" class="replay" id="replay">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4.5v4h4"/></svg>
+            <span data-i18n="hero.replay">再写一遍</span>
+          </button>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 翻字卡 -->
+  <section class="sec" id="cards">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="cards.kicker">翻一翻</p>
+        <h2 data-i18n="cards.title">点一点字卡，看看背面</h2>
+        <p class="sec-lead" data-i18n="cards.lead">下面的字、组词和造句都来自字芽的字库。正面是字，背面是拼音、组词和一句小句子。</p>
+      </header>
+      <div class="deck" id="deck"></div>
+    </div>
+  </section>
+
+  <!-- 学一个字 -->
+  <section class="sec sec-tint" id="learn">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="learn.kicker">学一个字</p>
+        <h2 data-i18n="learn.title">看字、听音、看笔顺，一次只学一个字</h2>
+      </header>
+      <ol class="steps">
+        <li class="step reveal"><span class="step-no">一</span><h3 data-i18n="learn.s1t">看大字</h3><p data-i18n="learn.s1">楷体大字配上拼音，字形规范清楚，适合刚开始认字的眼睛。</p></li>
+        <li class="step reveal"><span class="step-no">二</span><h3 data-i18n="learn.s2t">听读音</h3><p data-i18n="learn.s2">依次朗读字、组词和造句，可以重听，也可以慢速播放。部分常用字配有自然人声读音（AI 语音合成），其余使用系统离线语音。</p></li>
+        <li class="step reveal"><span class="step-no">三</span><h3 data-i18n="learn.s3t">看笔顺</h3><p data-i18n="learn.s3">朗读结束后自动播放笔顺动画，速度可以调，也可以关掉。</p></li>
+        <li class="step reveal"><span class="step-no">四</span><h3 data-i18n="learn.s4t">记下来</h3><p data-i18n="learn.s4">学过的字进入复习，隔一段时间再出现一次，慢慢记牢。</p></li>
+      </ol>
+      <div class="shot shot-wide reveal">
+        <img src="assets/shot-learn.webp" srcset="assets/shot-learn-800.webp 800w, assets/shot-learn.webp 1600w" sizes="(max-width: 1100px) 94vw, 1040px" width="1600" height="944" loading="lazy" decoding="async" alt="字芽 Mac 版学习页：大字「猫」、拼音 māo、组词小猫和造句" data-i18n-alt="learn.alt">
+      </div>
+    </div>
+  </section>
+
+  <!-- 字库 -->
+  <section class="sec" id="library">
+    <div class="wrap split">
+      <div class="split-copy reveal">
+        <p class="kicker" data-i18n="lib.kicker">字库</p>
+        <h2 data-i18n="lib.title">3500 个字，从启蒙排到六年级</h2>
+        <p class="sec-lead" data-i18n="lib.lead">按年级分成 46 个学习单元，也可以按身体、动物、植物、饮食、自然等 100 多个主题来学。字库页能用汉字、拼音或组词搜索，并按「未学 / 学习中 / 已会」筛选。</p>
+        <dl class="stats">
+          <div><dt>3500</dt><dd data-i18n="lib.st1">个常用字</dd></div>
+          <div><dt>46</dt><dd data-i18n="lib.st2">个学习单元</dd></div>
+          <div><dt>7</dt><dd data-i18n="lib.st3">个阶段：启蒙 + 一至六年级</dd></div>
+          <div><dt>100+</dt><dd data-i18n="lib.st4">个主题分类</dd></div>
+        </dl>
+      </div>
+      <div class="stack reveal">
+        <div class="shot shot-back">
+          <img src="assets/shot-library-800.webp" srcset="assets/shot-library-800.webp 800w, assets/shot-library.webp 1600w" sizes="(max-width: 900px) 80vw, 520px" width="800" height="600" loading="lazy" decoding="async" alt="字库页：按年级与掌握状态筛选 3500 个字" data-i18n-alt="lib.alt2">
+        </div>
+        <div class="shot shot-front">
+          <img src="assets/shot-home-800.webp" srcset="assets/shot-home-800.webp 800w, assets/shot-home.webp 1600w" sizes="(max-width: 900px) 80vw, 520px" width="800" height="600" loading="lazy" decoding="async" alt="分类页：按年级分组的学习单元" data-i18n-alt="lib.alt1">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 复习与小测 -->
+  <section class="sec sec-tint" id="review">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="rev.kicker">复习与小测</p>
+        <h2 data-i18n="rev.title">学过的字，隔几天再见一面</h2>
+      </header>
+      <div class="grid4">
+        <article class="tile reveal"><span class="tile-ic" aria-hidden="true">🔀</span><h3 data-i18n="rev.t1">打乱复习</h3><p data-i18n="rev.p1">把到期和学过的字打乱，从头到尾过一遍；也可以按类别或年级复习。</p></article>
+        <article class="tile reveal"><span class="tile-ic" aria-hidden="true">👂</span><h3 data-i18n="rev.t2">听音选字</h3><p data-i18n="rev.p2">听读音，从几个字里选出对的那个。家长先定好题量（5–50 题）和难度（基础 / 进阶 / 挑战），题目只从孩子学过的字里出。</p></article>
+        <article class="tile reveal"><span class="tile-ic" aria-hidden="true">🌿</span><h3 data-i18n="rev.t3">不急着纠错</h3><p data-i18n="rev.p3">答错先记下来，不当场打断；做完一轮再一起看错题。</p></article>
+        <article class="tile reveal"><span class="tile-ic" aria-hidden="true">📈</span><h3 data-i18n="rev.t4">成长报告</h3><p data-i18n="rev.p4">学了多少字、哪些还在学、哪些已经会了，错题记录也能回看。</p></article>
+      </div>
+      <div class="pair">
+        <div class="shot reveal"><img src="assets/shot-review-800.webp" srcset="assets/shot-review-800.webp 800w, assets/shot-review.webp 1600w" sizes="(max-width: 900px) 94vw, 510px" width="800" height="391" loading="lazy" decoding="async" alt="复习页：打乱复习、按类别或按年级复习" data-i18n-alt="rev.alt1"></div>
+        <div class="shot reveal"><img src="assets/shot-exam-800.webp" srcset="assets/shot-exam-800.webp 800w, assets/shot-exam.webp 1600w" sizes="(max-width: 900px) 94vw, 510px" width="800" height="347" loading="lazy" decoding="async" alt="听音选字设置：题量、难度与错题讲解方式" data-i18n-alt="rev.alt2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 给家长 -->
+  <section class="sec" id="parents">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="par.kicker">给家长</p>
+        <h2 data-i18n="par.title">安静、干净，放心交给孩子</h2>
+      </header>
+      <div class="notes">
+        <article class="note reveal"><h3 data-i18n="par.t1">离线使用</h3><p data-i18n="par.p1">不需要账号，也不需要联网。学习记录只保存在这台设备上，不会上传。</p></article>
+        <article class="note reveal"><h3 data-i18n="par.t2">没有广告和内购</h3><p data-i18n="par.p2">打开就是学习，没有广告，也没有付费解锁。</p></article>
+        <article class="note reveal"><h3 data-i18n="par.t3">楷体规范字</h3><p data-i18n="par.p3">识字页使用系统楷体，笔画起收清楚，贴近课本字形。</p></article>
+        <article class="note reveal"><h3 data-i18n="par.t4">家长中心</h3><p data-i18n="par.p4">设定每日学习目标、考试题量和复习方式，进度一目了然。</p></article>
+        <article class="note reveal"><h3 data-i18n="par.t5">五套皮肤</h3><p data-i18n="par.p5">春芽、水墨、海屿、糖果、星夜，挑一个孩子喜欢的颜色。</p></article>
+        <article class="note reveal"><h3 data-i18n="par.t6">Mac 上用键盘</h3><p data-i18n="par.p6">空格播放或暂停，左右方向键换字，⌘F 查字，大屏幕陪读更方便。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下载 -->
+  <section class="sec sec-tint" id="download">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="dl.kicker">下载</p>
+        <h2 data-i18n="dl.title">免费下载</h2>
+        <p class="sec-lead" data-i18n="dl.lead">字芽没有在应用商店上架，安装包放在 GitHub 上分享。当前版本 1.2。</p>
+      </header>
+      <div class="dl">
+        <article class="dl-card reveal">
+          <h3><span aria-hidden="true">💻</span> <span data-i18n="dl.macT">Mac 版</span></h3>
+          <ul>
+            <li data-i18n="dl.mac1">通用版本，Apple 芯片和 Intel 芯片的 Mac 都能用</li>
+            <li data-i18n="dl.mac2">需要 macOS 12 或更新版本</li>
+            <li data-i18n="dl.mac3">已用 Apple Developer ID 签名并通过公证，可以直接打开</li>
+            <li data-i18n="dl.mac4">打开 DMG，把「字芽」拖进「应用程序」文件夹即可</li>
+          </ul>
+          <a class="btn btn-main" href="https://github.com/wangwanjie/ZiYa/releases/latest/download/ZiYa-macOS.dmg"><span data-i18n="dl.macBtn">下载 DMG（约 5 MB）</span></a>
+        </article>
+        <article class="dl-card reveal">
+          <h3><span aria-hidden="true">📱</span> <span data-i18n="dl.iosT">iPhone / iPad 版</span></h3>
+          <ul>
+            <li data-i18n="dl.ios1">需要 iOS / iPadOS 14.8 或更新版本</li>
+            <li data-i18n="dl.ios2">这个 IPA 是开发版签名，只能安装在已登记到开发者账号的设备上，其他设备会安装失败</li>
+            <li data-i18n="dl.ios3">也可以试试用 AltStore、Sideloadly 等工具以自己的 Apple ID 重新签名安装，能否成功取决于工具和设备，无法保证</li>
+            <li data-i18n="dl.ios4">当前安装包的签名有效期到 2027 年 4 月</li>
+          </ul>
+          <a class="btn btn-soft" href="https://github.com/wangwanjie/ZiYa/releases/latest/download/ZiYa.ipa"><span data-i18n="dl.iosBtn">下载 IPA（约 5 MB）</span></a>
+        </article>
+      </div>
+      <p class="dl-foot reveal"><span data-i18n="dl.note">App 的界面和字库都是简体中文。</span> <a href="https://github.com/wangwanjie/ZiYa/releases" data-i18n="dl.all">查看所有版本</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="foot-brand">
+      <img src="assets/icon-64.webp" width="28" height="28" alt="" loading="lazy" decoding="async">
+      <span data-i18n="foot.tag">字芽 · 一字一芽，慢慢长大</span>
+    </div>
+    <nav class="foot-links" aria-label="页脚链接" data-i18n-aria="footAria">
+      <a href="https://vanjay.cn" data-i18n="foot.more">VanJay 的更多作品</a>
+      <a href="https://github.com/wangwanjie/ZiYa" data-i18n="foot.repo">GitHub 仓库</a>
+      <a href="https://github.com/wangwanjie/ZiYa/issues" data-i18n="foot.issues">问题反馈</a>
+    </nav>
+    <p class="copy">© 2026 VanJay</p>
+  </div>
+</footer>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
